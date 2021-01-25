@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from yahooquery import Ticker
-
+from apscheduler.schedulers.background import BackgroundScheduler
 from .model_form import AssetForm, ScheduleForm
 
 from .models import Asset, Schedule
@@ -71,5 +71,9 @@ def update_schedule(request, schedule_id):
     updaedScheduler = ScheduleForm(request.POST or None, instance = selectedSchedule)
     if updaedScheduler.is_valid():
        updaedScheduler.save()
+
+       from checkAssetsPrices import checkStockJob
+       checkStockJob.re_start()
+
        return redirect('index')
     return render(request, 'schedule_form.html', { 'newSchedule': updaedScheduler })
