@@ -1,0 +1,67 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fa/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <title>Monitoramento</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <div class="navbar-brand" href="#"><i class="fas fa-chart-line"></i> Monitoramento</div>
+        </div>
+    </nav>
+    <div id="asset-container">
+        <h2>Ativos em monitoramento</h2>
+        <div id="assets-sub-container">
+            {% if schedule %}
+                <span class="badge bg-secondary">Tempo de consulta: {{ schedule }} minutos</span>
+                <div style="margin-top: 40px;">
+                    <a type="button" class="btn btn-primary" href="create_asset"><i class="fas fa-chart-line"></i> Incluir novo ativo para monitoramento</a>
+                </div>
+                <table id="assets-table" class="table" >
+                    <thead>
+                      <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Ativo</th>
+                        <th scope="col">cotação</th>
+                        <th scope="col">usuário</th>
+                        <th scope="col">preço de venda</th>
+                        <th scope="col">preço de compra</th>
+                        <th scope="col">editar</th>
+                        <th scope="col">deletar</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                        {% for asset in assets %}
+                            <tr>
+                                <th scope="row"></th>
+                                <td>{{ asset.asset_name }}</td>
+                                <td>{{ asset.price }}</td>
+                                <td>{{ asset.user_email }}</td>
+                                <td>{{ asset.up_price }}</td>
+                                <td>{{ asset.low_price }}</td>
+                                <td><a href="update_asset/{{asset.id}}" id = '{{asset.id}}'><i class="far fa-edit"></a></td>
+                                <td><a href="delete_asset/{{asset.id}}" id = '{{asset.id}}'><i class="far fa-trash-alt"></i></a></td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                  </table>
+            {% else %}
+                <div style="margin-bottom: 10px;" class="alert alert-danger" role="alert">Tempo de consulta não definido: </div>
+                <a type="button" class="btn btn-primary" href="create_schedule"><i class="far fa-clock"></i> Definir tempo de consulta</a>
+            {% endif %}
+        </div>
+    </div>
+</body>
+
+</html>

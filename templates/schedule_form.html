@@ -1,0 +1,40 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'fa/css/all.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <title>Monitoramento</title>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <div class="navbar-brand" href="#">Monitoramento</div>
+        </div>
+    </nav>
+    <center>
+        <form method = 'POST' enctype="multipart/form-data">
+            <h2 id="schedule-title" >Defina o tempo de consulta: </h2>
+            {% csrf_token %}
+            <table class='w-50 table table-light' style="border-radius:10px;background-color:#FFFF99;">
+                {% for field in newSchedule %}
+                <tr>
+                    <th>{{field.label}}</th>
+                    <td>{{ field }}</td>
+                </tr>
+                {% endfor %}
+            </table>
+            <button type="submit" class="btn btn-lg btn-warning">Definir</button>
+        </form>
+    </center>
+</body>
+
+</html>

@@ -1,0 +1,28 @@
+body {
+    background: #fafafa;
+    color: #333333;
+}
+
+#schedule-title {
+    margin-top: 15px;
+    margin-bottom: 25px;
+}
+
+#asset-container {
+    margin-top: 40px; 
+    padding: 0px 200px;
+    text-align: center;
+}
+
+#assets-sub-container {
+    margin-top: 50px;
+}
+
+#assets-table {
+    margin-top: 50px;
+}
+
+#asset-form-title {
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
