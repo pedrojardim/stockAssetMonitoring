@@ -2,6 +2,7 @@ import requests
 from yahooquery import Ticker
 from assetMonitoring.models import Asset, Schedule
 from django.core.mail import send_mail
+from stockAssetMonitoring.settings import EMAIL_HOST_USER
 import json
 import sys
 
@@ -10,7 +11,7 @@ def prepare_email(subject, msg, to):
         send_mail(
             subject,
             msg,
-            'drope.jardim@gmail.com',
+            EMAIL_HOST_USER,
             [to],
             fail_silently=False,
         )
@@ -29,12 +30,10 @@ def check_asset_price(asset):
                 asset.price = price
                 asset.save()
                 if price >= asset.up_price:
-                    print('Vender')
                     subject = 'Venda seu ativo: '+ asset.asset_name
                     msg = 'Ativo ' +  asset.asset_name + ' está valendo mais de: R$: ' + str(asset.up_price)
                     prepare_email(subject, msg, asset.user_email)
                 elif price <= asset.low_price:
-                    print('comprar')
                     subject = 'Compre o ativo: '+ asset.asset_name
                     msg = 'Ativo ' +  asset.asset_name + ' está abaixo de: R$: ' + str(asset.low_price)
                     prepare_email(subject, msg, asset.user_email)
