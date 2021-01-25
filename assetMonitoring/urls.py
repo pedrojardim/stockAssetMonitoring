@@ -8,4 +8,5 @@ urlpatterns = [
     path('update_asset/<int:asset_id>', views.update_asset, name='update_asset'),
     path('delete_asset/<int:asset_id>', views.delete_asset, name='delete_asset'),
     path('create_schedule/', views.create_schedule, name='create_schedule'),
+    path('update_schedule/<int:schedule_id>', views.update_schedule, name='update_schedule'),
 ]

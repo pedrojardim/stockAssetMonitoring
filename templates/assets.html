@@ -24,7 +24,9 @@
         <h2>Ativos em monitoramento</h2>
         <div id="assets-sub-container">
             {% if schedule %}
-                <span class="badge bg-secondary">Tempo de consulta: {{ schedule }} minutos</span>
+                <a href="update_schedule/{{schedule.id}}" id = '{{schedule.id}}'>
+                    <span class="badge bg-secondary"><i class="far fa-edit"></i> Tempo de consulta: {{ schedule }} minutos</span>
+                </a>
                 <div style="margin-top: 40px;">
                     <a type="button" class="btn btn-primary" href="create_asset"><i class="fas fa-chart-line"></i> Incluir novo ativo para monitoramento</a>
                 </div>
@@ -48,9 +50,9 @@
                                 <td>{{ asset.asset_name }}</td>
                                 <td>{{ asset.price }}</td>
                                 <td>{{ asset.user_email }}</td>
-                                <td>{{ asset.up_price }}</td>
+                                <td>{% if asset.up_price == 0.0 %} -- {% else %}{{ asset.up_price }}{% endif %}</td>
                                 <td>{{ asset.low_price }}</td>
-                                <td><a href="update_asset/{{asset.id}}" id = '{{asset.id}}'><i class="far fa-edit"></a></td>
+                                <td><a href="update_asset/{{asset.id}}" id = '{{asset.id}}'><i class="far fa-edit"></i></a></td>
                                 <td><a href="delete_asset/{{asset.id}}" id = '{{asset.id}}'><i class="far fa-trash-alt"></i></a></td>
                             </tr>
                         {% endfor %}

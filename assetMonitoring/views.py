@@ -14,20 +14,15 @@ def index(request):
 def create_asset(request):
     newAsset = AssetForm()
     if request.method == 'POST':
-        #checkAsset = Ticker(newAsset.asset_name)
-        #print(summary = checkAsset.summary_detail[asset.asset_name])
         newAsset = AssetForm(request.POST, request.FILES)
         if newAsset.is_valid():
             assetName = newAsset.cleaned_data['asset_name']
             consultAsset = Ticker(assetName)
-            print('consultAsset: ', consultAsset)
-            print('consultAsset: ', consultAsset.summary_detail[assetName])
             if 'Quote not found' in consultAsset.summary_detail[assetName]:
                 return render(request, 'asset_form.html', { 'newAsset': newAsset, 'assetNotFound': True })
             else:
                 newAsset.save()
                 return redirect('index')
-            print("consultAsset: ", consultAsset.summary_detail)
         else:
             return HttpResponse("""your form is wrong, reload on <a href = "{{ url : 'index' }}">reload</a>""")
     else:
@@ -37,7 +32,7 @@ def update_asset(request, asset_id):
     asset_id = int(asset_id)
     try:
         selectedAsset = Asset.objects.get(id = asset_id)
-    except Asset.DoesNotExist:
+    except selectedAsset.DoesNotExist:
         return redirect('index')
     updaedAsset = AssetForm(request.POST or None, instance = selectedAsset)
     if updaedAsset.is_valid():
@@ -67,3 +62,14 @@ def create_schedule(request):
     else:
         return render(request, 'schedule_form.html', { 'newSchedule': newSchedule })
 
+def update_schedule(request, schedule_id):
+    schedule_id = int(schedule_id)
+    try: 
+        selectedSchedule = Schedule.objects.get(id = schedule_id)
+    except selectedSchedule.DoesNotExist:
+        return redirect('index')
+    updaedScheduler = ScheduleForm(request.POST or None, instance = selectedSchedule)
+    if updaedScheduler.is_valid():
+       updaedScheduler.save()
+       return redirect('index')
+    return render(request, 'schedule_form.html', { 'newSchedule': updaedScheduler })
