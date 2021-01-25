@@ -15,13 +15,17 @@ def create_asset(request):
     newAsset = AssetForm()
     if request.method == 'POST':
         newAsset = AssetForm(request.POST, request.FILES)
+
         if newAsset.is_valid():
-            assetName = newAsset.cleaned_data['asset_name']
+            assetName = newAsset.cleaned_data['asset_name']             
             consultAsset = Ticker(assetName)
             if 'Quote not found' in consultAsset.summary_detail[assetName]:
                 return render(request, 'asset_form.html', { 'newAsset': newAsset, 'assetNotFound': True })
             else:
-                newAsset.save()
+                price = consultAsset.price[assetName]['regularMarketPrice']
+                asset = newAsset.save(commit=False)
+                asset.price = price
+                asset.save()
                 return redirect('index')
         else:
             return HttpResponse("""your form is wrong, reload on <a href = "{{ url : 'index' }}">reload</a>""")
@@ -35,9 +39,19 @@ def update_asset(request, asset_id):
     except selectedAsset.DoesNotExist:
         return redirect('index')
     updaedAsset = AssetForm(request.POST or None, instance = selectedAsset)
+
     if updaedAsset.is_valid():
-       updaedAsset.save()
-       return redirect('index')
+        assetName = updaedAsset.cleaned_data['asset_name']
+        consultAsset = Ticker(assetName)
+        if 'Quote not found' in consultAsset.summary_detail[assetName]:
+            return render(request, 'asset_form.html', { 'newAsset': updaedAsset, 'assetNotFound': True })
+        else:
+            price = consultAsset.price[assetName]['regularMarketPrice']
+            asset = updaedAsset.save(commit=False)
+            asset.price = price
+            asset.save()
+            return redirect('index')
+
     return render(request, 'asset_form.html', { 'newAsset': updaedAsset })
 
 def delete_asset(request, asset_id):
