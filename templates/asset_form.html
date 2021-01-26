@@ -29,6 +29,9 @@
                 Ativo não encontrado!
             </div>
         {% endif %}
+        <div id="asset-name-info" class="alert alert-info" role="alert">
+            O nome do ativo deve ser completo como encontrado no Yahoo Finance. Examplo:  PETR4 -> PETR4.SA
+        </div>
         <form method = 'POST' enctype="multipart/form-data">
             {% csrf_token %}
             <table class = 'w-50 table table-light' style="border-radius:10px;background-color:#FFFF99;">

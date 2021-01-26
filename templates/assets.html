@@ -50,7 +50,7 @@
                                 <td>{{ asset.asset_name }}</td>
                                 <td>{{ asset.price }}</td>
                                 <td>{{ asset.user_email }}</td>
-                                <td>{% if asset.up_price == 0.0 %} -- {% else %}{{ asset.up_price }}{% endif %}</td>
+                                <td>{{ asset.up_price }}</td>
                                 <td>{{ asset.low_price }}</td>
                                 <td><a href="update_asset/{{asset.id}}" id = '{{asset.id}}'><i class="far fa-edit"></i></a></td>
                                 <td><a href="delete_asset/{{asset.id}}" id = '{{asset.id}}'><i class="far fa-trash-alt"></i></a></td>

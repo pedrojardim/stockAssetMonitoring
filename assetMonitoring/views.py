@@ -63,13 +63,14 @@ def delete_asset(request, asset_id):
     asset_to_delete.delete()
     return redirect('index')
 
-
 def create_schedule(request):
     newSchedule = ScheduleForm()
     if request.method == 'POST':
         newSchedule = ScheduleForm(request.POST, request.FILES)
         if newSchedule.is_valid():
             newSchedule.save()
+            from checkAssetsPrices import checkStockJob
+            checkStockJob.start()
             return redirect('index')
         else:
             return HttpResponse("""your form is wrong, reload on <a href = "{{ url : 'index' }}">reload</a>""")
