@@ -6,7 +6,7 @@ Used libs:
 
  - yahooquery: https://pypi.org/project/yahooquery/ (pip install yahooquery)
 
- - APScheduler: https://pypi.org/project/APScheduler/2.1.2/ (pip install APScheduler==2.1.2)
+ - APScheduler: https://pypi.org/project/APScheduler/2.1.2/ (pip install APScheduler)
    
 
 
